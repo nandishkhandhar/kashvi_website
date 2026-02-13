@@ -431,6 +431,54 @@
   animation: bounce 1s ease infinite;
 }
 
+/* Surprise Section */
+.surprise-section {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, #fff0f5 0%, #ffe4f0 100%);
+  border-radius: 20px;
+  border: 3px dashed #ff6b9d;
+  text-align: center;
+}
+
+.surprise-title {
+  font-size: 1.8rem;
+  color: #ff006e;
+  margin-bottom: 1.5rem;
+}
+
+.surprise-button {
+  background: linear-gradient(135deg, #ff006e 0%, #ff6b9d 100%);
+  color: white;
+  border: none;
+  padding: 1.2rem 3rem;
+  font-size: 1.3rem;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(255, 0, 110, 0.4);
+}
+
+.surprise-button:hover {
+  transform: scale(1.05) translateY(-3px);
+  box-shadow: 0 15px 40px rgba(255, 0, 110, 0.5);
+}
+
+.surprise-success {
+  font-size: 1.3rem;
+  color: #4caf50;
+  font-weight: 600;
+  margin: 1rem 0;
+}
+
+.scheduling-status {
+  font-size: 1.1rem;
+  color: #666;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .card {

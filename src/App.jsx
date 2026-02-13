@@ -47,6 +47,8 @@ function App() {
   const [noButtonSize, setNoButtonSize] = useState(1);
   const [showGutterMessage, setShowGutterMessage] = useState(false);
   const [gutterMessageText, setGutterMessageText] = useState("");
+  const [messagesScheduled, setMessagesScheduled] = useState(false);
+  const [schedulingStatus, setSchedulingStatus] = useState("");
 
   const handleStart = () => {
     setStep('questions');
@@ -182,6 +184,34 @@ function App() {
     const randomY = Math.random() * 200 - 100;
     setNoButtonPosition({ x: randomX, y: randomY });
     setNoButtonSize(Math.max(0.3, noButtonSize - 0.1));
+  };
+
+  const handleScheduleMessages = async () => {
+    // IMPORTANT: Replace this with her actual phone number
+    const phoneNumber = "+1XXXXXXXXXX"; // TODO: Add her phone number in format +1234567890
+
+    setSchedulingStatus("Scheduling messages...");
+
+    try {
+      const response = await fetch('/api/schedule-messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ phoneNumber }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setMessagesScheduled(true);
+        setSchedulingStatus(`✅ ${data.scheduled.length} sweet messages scheduled!`);
+      } else {
+        setSchedulingStatus(`❌ Failed: ${data.error}`);
+      }
+    } catch (error) {
+      setSchedulingStatus(`❌ Error: ${error.message}`);
+    }
   };
 
   if (step === 'welcome') {
@@ -328,6 +358,22 @@ function App() {
               <p className="good-job-message">good job, u got all right hehe :)</p>
             ) : (
               <p className="shame-message">shame on u 😠</p>
+            )}
+          </div>
+
+          <div className="surprise-section">
+            <h3 className="surprise-title">One more thing... 💌</h3>
+            {!messagesScheduled ? (
+              <button className="surprise-button" onClick={handleScheduleMessages}>
+                Click for a surprise!
+              </button>
+            ) : (
+              <p className="surprise-success">
+                You'll be getting sweet messages from me for the next week! 💕
+              </p>
+            )}
+            {schedulingStatus && (
+              <p className="scheduling-status">{schedulingStatus}</p>
             )}
           </div>
         </div>
