@@ -40,7 +40,7 @@ const questions = [
 ];
 
 function App() {
-  const [step, setStep] = useState('welcome'); // welcome, questions, final, celebration
+  const [step, setStep] = useState('welcome'); // welcome, questions, final, celebration, reasons
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState({});
   const [noButtonPosition, setNoButtonPosition] = useState({ x: 0, y: 0 });
@@ -49,6 +49,7 @@ function App() {
   const [gutterMessageText, setGutterMessageText] = useState("");
   const [messagesScheduled, setMessagesScheduled] = useState(false);
   const [schedulingStatus, setSchedulingStatus] = useState("");
+  const [revealedHearts, setRevealedHearts] = useState([]);
 
   const handleStart = () => {
     setStep('questions');
@@ -214,6 +215,16 @@ function App() {
     }
   };
 
+  const handleRevealHeart = (index) => {
+    if (!revealedHearts.includes(index)) {
+      setRevealedHearts([...revealedHearts, index]);
+    }
+  };
+
+  const handleNextToReasons = () => {
+    setStep('reasons');
+  };
+
   if (step === 'welcome') {
     return (
       <div className="container">
@@ -376,7 +387,47 @@ function App() {
               <p className="scheduling-status">{schedulingStatus}</p>
             )}
           </div>
+
+          <button className="next-button" onClick={handleNextToReasons}>
+            Next →
+          </button>
         </div>
+      </div>
+    );
+  }
+
+  if (step === 'reasons') {
+    const heartReasons = [
+      { text: "Because you're the cutest", top: 20, left: 15 },
+      { text: "Your energy is contagious :)", top: 40, left: 70 },
+      { text: "You understand me better than anyone 🥹", top: 60, left: 30 },
+      { text: "ur tits ;)", top: 25, left: 80 },
+      { text: "Need u for the cuddles hehe", top: 75, left: 50 }
+    ];
+
+    return (
+      <div className="container reasons-page">
+        <div className="reasons-background">
+          {heartReasons.map((reason, index) => (
+            <div
+              key={index}
+              className={`floating-heart ${revealedHearts.includes(index) ? 'revealed' : ''}`}
+              style={{
+                top: `${reason.top}%`,
+                left: `${reason.left}%`
+              }}
+              onClick={() => handleRevealHeart(index)}
+            >
+              {revealedHearts.includes(index) ? (
+                <div className="heart-text">{reason.text}</div>
+              ) : (
+                <div className="heart-icon">❤️</div>
+              )}
+            </div>
+          ))}
+        </div>
+        <h1 className="reasons-title">Why I love you...</h1>
+        <p className="reasons-subtitle">Click the hearts to find out 💕</p>
       </div>
     );
   }
